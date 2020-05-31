@@ -1,0 +1,70 @@
+<configuration debug= 'true' packagingData = 'true'>
+    <property name="LOG_DIR" value="/data/data/com.paycraft.tom/files/log" />
+    <append>true</append>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- active log file -->
+        <file>${LOG_DIR}/TraceLog/log.txt</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- hourly rollover period -->
+            <fileNamePattern>${LOG_DIR}/TraceLog/log.%d{yyyy-MM-dd_HH}.txt</fileNamePattern>
+
+            <!-- keep 3 hours' worth of history -->
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="DebugLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
+        <!-- active log file -->
+        <file>${LOG_DIR}/DebugLog/debugLog.txt</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- hourly rollover period -->
+            <fileNamePattern>${LOG_DIR}/DebugLog/debugLog.%d{yyyy-MM-dd_HH}.txt</fileNamePattern>
+
+            <!-- keep 3 hours' worth of history -->
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="ErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
+        <!-- active log file -->
+        <file>${LOG_DIR}/ErrorLog/errorLog.txt</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- hourly rollover period -->
+            <fileNamePattern>${LOG_DIR}/ErrorLog/errorLog.%d{yyyy-MM-dd_HH}.txt</fileNamePattern>
+
+            <!-- keep 3 hours' worth of history -->
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="TRACE">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="DebugLog" />
+        <appender-ref ref="ErrorLog" />
+    </root>
+</configuration>
